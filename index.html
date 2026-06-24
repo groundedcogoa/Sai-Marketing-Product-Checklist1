@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sai Marketing | Mobile Field Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* Optimize touch targets for mobile screens */
+        input[type="checkbox"] { min-width: 24px; min-height: 24px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 antialiased min-h-screen pb-20">
+
+    <header class="bg-indigo-950 text-white sticky top-0 z-40 shadow-sm px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i data-lucide="building-2" class="w-5 h-5 text-indigo-400"></i>
+            <span class="font-bold text-base tracking-tight">Sai Marketing</span>
+        </div>
+        <div id="role-badge" class="text-xs bg-indigo-800 text-indigo-200 px-2.5 py-1 rounded-full font-medium uppercase tracking-wider">
+            Loading Portal...
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto p-3 space-y-4">
+        
+        <div id="identity-card" class="hidden bg-white p-4 rounded-xl shadow-sm border border-gray-200/60 space-y-3">
+            <div class="flex items-center space-x-2 text-indigo-900">
+                <i data-lucide="user-check" class="w-5 h-5"></i>
+                <h2 class="font-bold text-sm uppercase tracking-wider">Executive Profile Setup</h2>
+            </div>
+            <p class="text-xs text-gray-500">Enter your official name below. This locks this mobile device to your account to protect your client details from other agents.</p>
+            <div class="flex space-x-2">
+                <input type="text" id="lockedExecName" placeholder="Your Full Name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                <button onclick="lockExecutiveProfile()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors">Lock</button>
+            </div>
+        </div>
+
+        <div id="sales-form-view" class="hidden space-y-4">
+            
+            <div id="executive-banner" class="hidden bg-gradient-to-r from-indigo-900 to-slate-800 text-white p-4 rounded-xl shadow-sm justify-between items-center">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-indigo-300 block">Field Agent Portfolio</span>
+                    <span id="display-agent-name" class="font-bold text-base">...</span>
+                </div>
+                <button onclick="resetAgentProfile()" class="text-[11px] text-indigo-300 underline hover:text-white">Change Name</button>
+            </div>
+
+            <form id="checklist-form" onsubmit="handleFormSubmit(event)" class="bg-white p-4 rounded-xl shadow-sm border border-gray-200/60 space-y-3">
+                <div class="border-b border-gray-100 pb-2 flex items-center space-x-2 text-gray-900">
+                    <i data-lucide="text-quote" class="w-4 h-4 text-indigo-600"></i>
+                    <h3 class="text-xs font-bold uppercase tracking-wider">Client & Project Specifics</h3>
+                </div>
+                <div class="space-y-2.5">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Client Business Name *</label>
+                        <input type="text" id="clientName" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Contact Mobile Number *</label>
+                        <input type="tel" id="contactNo" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Project / Construction Site Location *</label>
+                        <input type="text" id="projectSite" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none">
+                    </div>
+                </div>
+            </form>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200/60 overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
+                    <div class="flex items-center space-x-1.5 text-gray-900">
+                        <i data-lucide="check-square" class="w-4 h-4 text-indigo-600"></i>
+                        <h3 class="text-xs font-bold uppercase tracking-wider">Product Matrix Checklist</h3>
+                    </div>
+                    <span id="grand-total-display" class="text-base font-black text-indigo-600">₹0</span>
+                </div>
+
+                <div id="mobile-product-cards" class="divide-y divide-gray-100 max-h-[50vh] overflow-y-auto p-2 space-y-2 no-scrollbar">
+                    </div>
+
+                <div class="p-4 bg-gray-50 border-t border-gray-100 space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Site Notes / Logistical Remarks</label>
+                        <textarea id="additionalRemarks" rows="2" class="w-full border border-gray-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-indigo-600 focus:outline-none" placeholder="Enter special delivery requirements, delivery timelines..."></textarea>
+                    </div>
+                    <button type="submit" form="checklist-form" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-xl text-sm shadow-md hover:bg-indigo-700 active:scale-[0.99] transition-transform flex justify-center items-center space-x-2">
+                        <i data-lucide="cloud-lightning" class="w-4 h-4"></i>
+                        <span>Save & Lock Enquiry Logs</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="sales-dashboard-view" class="hidden space-y-3">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500">My Submissions (Current Month)</h3>
+                <span id="agent-submission-count" class="bg-indigo-100 text-indigo-800 text-xs px-2 py-0.5 rounded-full font-bold">0 Forms</span>
+            </div>
+            <div id="agent-history-stack" class="space-y-2">
+                </div>
+        </div>
+
+        <div id="admin-view" class="hidden space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white p-3 rounded-xl border border-gray-200/60 shadow-sm">
+                    <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pipeline Forms</span>
+                    <span id="admin-widget-count" class="text-xl font-black text-gray-900">0</span>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-gray-200/60 shadow-sm">
+                    <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pipeline Value</span>
+                    <span id="admin-widget-value" class="text-xl font-black text-emerald-600">₹0</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-gray-200/60 shadow-sm space-y-2">
+                <h4 class="text-xs font-bold text-gray-900 uppercase tracking-wider border-b border-gray-100 pb-1.5 flex items-center space-x-1.5">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-indigo-600"></i>
+                    <span>Team Sales Activity Logs</span>
+                </h4>
+                <div id="admin-executive-leaderboard" class="divide-y divide-gray-50 text-xs">
+                    </div>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Master Field Registry Logs</h4>
+                <div id="admin-master-registry" class="space-y-2">
+                    </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer id="mobile-nav-bar" class="hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-16 shadow-lg z-50 flex justify-around items-center">
+        <button id="nav-btn-form" onclick="toggleSalesSubView('form')" class="flex flex-col items-center justify-center space-y-1 text-indigo-600 font-bold transition-all">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+            <span class="text-[11px]">Enquiry Form</span>
+        </button>
+        <button id="nav-btn-dash" onclick="toggleSalesSubView('dash')" class="flex flex-col items-center justify-center space-y-1 text-gray-400 font-medium transition-all">
+            <i data-lucide="folder-heart" class="w-5 h-5"></i>
+            <span class="text-[11px]">My Dashboard</span>
+        </button>
+    </footer>
+
+    <div class="absolute left-[-9999px] top-[-9999px]">
+        <div id="pdf-rendering-template" class="p-8 bg-white font-serif text-gray-900 w-[794px] space-y-6 text-sm" style="box-sizing: border-box;">
+            <div class="border-b-4 border-indigo-900 pb-4 flex justify-between items-end">
+                <div>
+                    <h1 class="text-3xl font-black uppercase tracking-tight text-indigo-950">Sai Marketing</h1>
+                    <p class="text-xs font-sans text-gray-500 uppercase tracking-widest mt-0.5">Product Requirements Document Checklist</p>
+                </div>
+                <div class="text-right font-sans text-xs text-gray-600 space-y-0.5">
+                    <div><strong>Enquiry ID:</strong> <span id="pdf-id"></span></div>
+                    <div><strong>Date logged:</strong> <span id="pdf-date"></span></div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-md border border-gray-200 grid grid-cols-2 gap-4 text-xs font-sans">
+                <div>
+                    <p class="text-gray-400 uppercase font-bold tracking-wider text-[10px] mb-0.5">Account / Field Rep Details</p>
+                    <p class="text-gray-900 font-bold"><strong>Sales Executive:</strong> <span id="pdf-rep"></span></p>
+                    <p class="text-gray-900"><strong>Project/Site Location:</strong> <span id="pdf-site"></span></p>
+                </div>
+                <div>
+                    <p class="text-gray-400 uppercase font-bold tracking-wider text-[10px] mb-0.5">Client Procurement Details</p>
+                    <p class="text-gray-900 font-bold"><strong>Client Entity:</strong> <span id="pdf-client"></span></p>
+                    <p class="text-gray-900"><strong>Contact Number:</strong> <span id="pdf-phone"></span></p>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <h3 class="text-xs uppercase tracking-wider font-bold text-gray-500 font-sans">Identified Product Requirements Checklist</h3>
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-indigo-900 text-white font-sans uppercase text-[10px] tracking-wider">
+                            <th class="p-2 border border-indigo-900">Material Description</th>
+                            <th class="p-2 border border-indigo-900">Brands / Options</th>
+                            <th class="p-2 border border-indigo-900 text-center w-12">Qty</th>
+                            <th class="p-2 border border-indigo-900 text-right w-24">Est. Unit Cost</th>
+                            <th class="p-2 border border-indigo-900 text-right w-28">Total Value</th>
+                            <th class="p-2 border border-indigo-900 w-40">Specific Custom Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdf-table-rows" class="divide-y divide-gray-200 border border-gray-200">
+                        </tbody>
+                    <tfoot>
+                        <tr class="font-bold bg-gray-100 text-sm">
+                            <td colspan="4" class="p-2 text-right font-sans uppercase text-xs tracking-wider text-gray-500">Projected Value Portfolio Estimate:</td>
+                            <td id="pdf-grand-total" class="p-2 text-right text-indigo-950 font-black">₹0.00</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="space-y-1 font-sans">
+                <h4 class="text-[11px] uppercase tracking-wider font-bold text-gray-400">Additional Remarks / Special Site Instructions</h4>
+                <div id="pdf-remarks" class="p-3 bg-gray-50 border border-gray-200 text-xs italic rounded min-h-[50px] text-gray-700"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Official Product Catalogue from PDF
+        const catalogData = [
+            { id: 1, desc: "Rockwool / Glasswool", brands: "Roxul / Owens Corning" },
+            { id: 2, desc: "Soffit Ceiling", brands: "PARE" },
+            { id: 3, desc: "WPC Planks / Shera Planks", brands: "Woodalt / Birla" },
+            { id: 4, desc: "Fiber Cement Board", brands: "Birla" },
+            { id: 5, desc: "Solid Wall Panels", brands: "Birla Aerocon" },
+            { id: 6, desc: "Shingles / Roofing Tiles", brands: "Technonicol / Aerocomfort" },
+            { id: 7, desc: "Roofing Insulated Sheets", brands: "Onduline" },
+            { id: 8, desc: "Glass Hardware, Shower cubicles and railings", brands: "Dorma / AIDO" },
+            { id: 9, desc: "Locks RFID / Digital Locks", brands: "AIDO" },
+            { id: 10, desc: "WPC Board / WPC Doors & Frames / Deck Flooring", brands: "Woodalt / Aakruti" },
+            { id: 11, desc: "Tile Protector", brands: "Cello" },
+            { id: 12, desc: "SPC / Vinyl", brands: "Wellspun" },
+            { id: 13, desc: "Wooden Flooring", brands: "Premium Options Available" },
+            { id: 14, desc: "UPVC Windows", brands: "Oyster" },
+            { id: 15, desc: "UPVC Sheets", brands: "Prospan / Ecoshape" }
+        ];
+
+        // System Application Routing State 
+        let currentRole = "sales"; 
+        let currentAgentName = localStorage.getItem("sai_marketing_agent_identity") || "";
+        let masterEnquiries = JSON.parse(localStorage.getItem("sai_marketing_enquiries")) || [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            determineUserRoutingRole();
+            initializeApplicationViews();
+            lucide.createIcons();
+        });
+
+        // Parse query strings (?view=admin) to route roles securely
+        function determineUserRoutingRole() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const viewParam = urlParams.get('view');
+            if(viewParam === 'admin') {
+                currentRole = "admin";
+                document.getElementById("role-badge").innerText = "Admin Portal";
+                document.getElementById("role-badge").className = "text-xs bg-emerald-800 text-emerald-100 px-2.5 py-1 rounded-full font-medium uppercase tracking-wider";
+            } else {
+                currentRole = "sales";
+                document.getElementById("role-badge").innerText = "Field Sales Agent";
+            }
+        }
+
+        // Initialize display configuration paths
+        function initializeApplicationViews() {
+            if(currentRole === 'admin') {
+                document.getElementById("admin-view").classList.remove("hidden");
+                document.getElementById("mobile-nav-bar").classList.add("hidden");
+                renderAdminConsole();
+            } else {
+                document.getElementById("mobile-nav-bar").classList.remove("hidden");
+                renderMobileProductStackCards();
+                if(!currentAgentName) {
+                    document.getElementById("identity-card").classList.remove("hidden");
+                } else {
+                    displayAuthenticatedSalesInterface();
+                }
+            }
+        }
+
+        // Authenticate profile identities
+        function lockExecutiveProfile() {
+            const inputVal = document.getElementById("lockedExecName").value.trim();
+            if(!inputVal) return alert("Please enter your name to proceed.");
+            localStorage.setItem("sai_marketing_agent_identity", inputVal);
+            currentAgentName = inputVal;
+            displayAuthenticatedSalesInterface();
+        }
+
+        function resetAgentProfile() {
+            if(confirm("Change Executive Identity profile configuration lock on this device?")) {
+                localStorage.removeItem("sai_marketing_agent_identity");
+                currentAgentName = "";
+                window.location.reload();
+            }
+        }
+
+        function displayAuthenticatedSalesInterface() {
+            document.getElementById("identity-card").classList.add("hidden");
+            document.getElementById("sales-form-view").classList.remove("hidden");
+            document.getElementById("executive-banner").classList.remove("hidden");
+            document.getElementById("executive-banner").classList.add("flex");
+            document.getElementById("display-agent-name").innerText = currentAgentName;
+            toggleSalesSubView('form');
+        }
+
+        // Alternate view layers between Data Form Entry and Personal History Log Lists
+        function toggleSalesSubView(subview) {
+            const formView = document.getElementById("sales-form-view");
+            const dashView = document.getElementById("sales-dashboard-view");
+            const btnForm = document.getElementById("nav-btn-form");
+            const btnDash = document.getElementById("nav-btn-dash");
+
+            if(subview === 'form') {
+                formView.classList.remove("hidden");
+                dashView.classList.add("hidden");
+                btnForm.className = "flex flex-col items-center justify-center space-y-1 text-indigo-600 font-bold transition-all";
+                btnDash.className = "flex flex-col items-center justify-center space-y-1 text-gray-400 font-medium transition-all";
+            } else {
+                formView.classList.add("hidden");
+                dashView.classList.remove("hidden");
+                btnForm.className = "flex flex-col items-center justify-center space-y-1 text-gray-400 font-medium transition-all";
+                btnDash.className = "flex flex-col items-center justify-center space-y-1 text-indigo-600 font-bold transition-all";
+                renderPersonalAgentDashboard();
+            }
+        }
+
+        // Render mobile-first stacked checklist view configuration cards
+        function renderMobileProductStackCards() {
+            const container = document.getElementById("mobile-product-cards");
+            container.innerHTML = catalogData.map(item => `
+                <div id="card-${item.id}" class="p-3 rounded-xl border border-gray-100 bg-gray-50/50 space-y-2.5 transition-all">
+                    <div class="flex items-start space-x-3">
+                        <input type="checkbox" id="check-${item.id}" onchange="toggleCardActivity(${item.id})" class="mt-0.5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-600 cursor-pointer">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-xs font-bold text-gray-900 leading-tight">${item.desc}</h4>
+                            <p class="text-[10px] text-gray-400 truncate mt-0.5">${item.brands}</p>
+                        </div>
+                        <span id="total-lbl-${item.id}" class="text-xs font-bold text-gray-400">₹0</span>
+                    </div>
+                    
+                    <div id="calc-fields-${item.id}" class="hidden grid grid-cols-2 gap-2 pt-2 border-t border-dashed border-gray-200">
+                        <div>
+                            <label class="block text-[9px] font-bold text-gray-400 uppercase mb-0.5">Quantity Required</label>
+                            <input type="number" id="qty-${item.id}" min="1" value="1" oninput="calculateCardTotal(${item.id})" class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs text-center focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-gray-400 uppercase mb-0.5">Est. Unit Price (₹)</label>
+                            <input type="number" id="cost-${item.id}" min="0" placeholder="0" oninput="calculateCardTotal(${item.id})" class="w-full border border-gray-200 rounded-md px-2 py-1 text-xs text-right focus:outline-none focus:border-indigo-600">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-[9px] font-bold text-gray-400 uppercase mb-0.5">Specific Requirements Notes</label>
+                            <input type="text" id="notes-${item.id}" placeholder="Specify standard sizes, structural details..." class="w-full border border-gray-200 rounded-md px-2 py-1 text-[11px] focus:outline-none focus:border-indigo-600">
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCardActivity(id) {
+            const isChecked = document.getElementById(`check-${id}`).checked;
+            const card = document.getElementById(`card-${id}`);
+            const fieldsBlock = document.getElementById(`calc-fields-${id}`);
+            const labelTotal = document.getElementById(`total-lbl-${id}`);
+
+            if(isChecked) {
+                card.className = "p-3 rounded-xl border border-indigo-200 bg-indigo-50/30 space-y-2.5 transition-all";
+                fieldsBlock.classList.remove("hidden");
+                labelTotal.className = "text-xs font-bold text-indigo-600";
+            } else {
+                card.className = "p-3 rounded-xl border border-gray-100 bg-gray-50/50 space-y-2.5 transition-all";
+                fieldsBlock.classList.add("hidden");
+                labelTotal.className = "text-xs font-bold text-gray-400";
+                document.getElementById(`qty-${id}`).value = 1;
+                document.getElementById(`cost-${id}`).value = "";
+                document.getElementById(`notes-${id}`).value = "";
+                labelTotal.innerText = "₹0";
+            }
+            calculateGrandTotal();
+        }
+
+        function calculateCardTotal(id) {
+            const qty = parseFloat(document.getElementById(`qty-${id}`).value) || 0;
+            const cost = parseFloat(document.getElementById(`cost-${id}`).value) || 0;
+            const total = qty * cost;
+            document.getElementById(`total-lbl-${id}`).innerText = `₹${total.toLocaleString('en-IN')}`;
+            calculateGrandTotal();
+        }
+
+        function calculateGrandTotal() {
+            let runningSum = 0;
+            catalogData.forEach(item => {
+                if(document.getElementById(`check-${item.id}`) && document.getElementById(`check-${item.id}`).checked) {
+                    const qty = parseFloat(document.getElementById(`qty-${item.id}`).value) || 0;
+                    const cost = parseFloat(document.getElementById(`cost-${item.id}`).value) || 0;
+                    runningSum += (qty * cost);
+                }
+            });
+            document.getElementById("grand-total-display").innerText = `₹${runningSum.toLocaleString('en-IN')}`;
+            return runningSum;
+        }
+
+        // Process Form Ingestion Pipeline Engine
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            if(!currentAgentName) return alert("Error: Identify profile lock before compiling entries.");
+
+            const selectedLines = [];
+            catalogData.forEach(item => {
+                if(document.getElementById(`check-${item.id}`).checked) {
+                    selectedLines.push({
+                        productId: item.id,
+                        description: item.desc,
+                        brand: item.brands,
+                        qty: parseFloat(document.getElementById(`qty-${item.id}`).value) || 1,
+                        unitCost: parseFloat(document.getElementById(`cost-${item.id}`).value) || 0,
+                        notes: document.getElementById(`notes-${item.id}`).value
+                    });
+                }
+            });
+
+            if(selectedLines.length === 0) return alert("Validation Error: Choose at least 1 product parameter specification.");
+
+            const documentRecord = {
+                id: 'SM-' + Math.floor(100000 + Math.random() * 900000),
+                timestamp: new Date().toISOString(),
+                executive: currentAgentName,
+                client: document.getElementById("clientName").value.trim(),
+                contact: document.getElementById("contactNo").value.trim(),
+                site: document.getElementById("projectSite").value.trim(),
+                items: selectedLines,
+                remarks: document.getElementById("additionalRemarks").value.trim(),
+                grandTotal: calculateGrandTotal()
+            };
+
+            masterEnquiries.push(documentRecord);
+            localStorage.setItem("sai_marketing_enquiries", JSON.stringify(masterEnquiries));
+            
+            alert(`Log Recorded! System Reference ID: ${documentRecord.id}`);
+            document.getElementById("checklist-form").reset();
+            document.getElementById("additionalRemarks").value = "";
+            renderMobileProductStackCards();
+            calculateGrandTotal();
+            toggleSalesSubView('dash');
+        }
+
+        // Render Personal Dashboard Isolated Security View Engine (Self-Only)
+        function renderPersonalAgentDashboard() {
+            const stack = document.getElementById("agent-history-stack");
+            // Filter entries to only show the logged-in agent's submissions
+            const selfRecords = masterEnquiries.filter(e => e.executive.trim().toLowerCase() === currentAgentName.trim().toLowerCase());
+            
+            document.getElementById("agent-submission-count").innerText = `${selfRecords.length} Forms`;
+
+            if(selfRecords.length === 0) {
+                stack.innerHTML = `
+                    <div class="bg-white p-6 rounded-xl border border-gray-200/60 text-center text-xs text-gray-400 italic">
+                        No field enquiries logged on this profile this month yet.
+                    </div>
+                `;
+                return;
+            }
+
+            stack.innerHTML = selfRecords.slice().reverse().map(rec => `
+                <div class="bg-white p-3 rounded-xl border border-gray-200/60 shadow-sm space-y-2.5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[10px] text-gray-400 font-mono block">${new Date(rec.timestamp).toLocaleDateString('en-IN', {day:'2-digit', month:'short'})} | ${rec.id}</span>
+                            <h4 class="font-bold text-sm text-gray-900">${rec.client}</h4>
+                        </div>
+                        <span class="text-sm font-black text-indigo-600">₹${rec.grandTotal.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div class="text-[11px] text-gray-500 font-medium">
+                        <p class="truncate"><strong>Site:</strong> ${rec.site}</p>
+                        <p class="text-[10px] text-gray-400 mt-0.5 font-bold uppercase tracking-wider">${rec.items.length} materials tracked</p>
+                    </div>
+                    <button onclick="triggerPdfGeneration Pipeline('${rec.id}')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-1.5 px-3 rounded-lg text-xs flex justify-center items-center space-x-1.5 transition-colors">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span>Download Client PDF Receipt</span>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // ================= ADMIN CONSOLE RENDERING CORE ENGINE ================= -->
+        function renderAdminConsole() {
+            // Aggregate totals across all submissions
+            document.getElementById("admin-widget-count").innerText = masterEnquiries.length;
+            const grossSum = masterEnquiries.reduce((sum, curr) => sum + curr.grandTotal, 0);
+            document.getElementById("admin-widget-value").innerText = `₹${grossSum.toLocaleString('en-IN')}`;
+
+            // Aggregate metrics broken down by individual field executive
+            const analyticTrackingMap = {};
+            masterEnquiries.forEach(rec => {
+                const name = rec.executive.trim();
+                if(!analyticTrackingMap[name]) analyticTrackingMap[name] = { forms: 0, worth: 0 };
+                analyticTrackingMap[name].forms++;
+                analyticTrackingMap[name].worth += rec.grandTotal;
+            });
+
+            const leadBoard = document.getElementById("admin-executive-leaderboard");
+            if(Object.keys(analyticTrackingMap).length === 0) {
+                leadBoard.innerHTML = `<p class="text-gray-400 italic text-center py-2">No executive logs collected yet.</p>`;
+            } else {
+                leadBoard.innerHTML = Object.entries(analyticTrackingMap).map(([name, stat]) => `
+                    <div class="flex justify-between items-center py-2">
+                        <div class="font-semibold text-gray-800">${name}</div>
+                        <div class="text-right">
+                            <span class="font-bold text-gray-900">${stat.forms} leads</span>
+                            <span class="text-gray-400 mx-1">|</span>
+                            <span class="font-extrabold text-indigo-600">₹${stat.worth.toLocaleString('en-IN')}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Render all logged client submissions globally across the team
+            const register = document.getElementById("admin-master-registry");
+            if(masterEnquiries.length === 0) {
+                register.innerHTML = `
+                    <div class="bg-white p-6 rounded-xl border border-gray-200/60 text-center text-xs text-gray-400 italic">
+                        No customer logs registered globally.
+                    </div>
+                `;
+                return;
+            }
+
+            register.innerHTML = masterEnquiries.slice().reverse().map(rec => `
+                <div class="bg-white p-3 rounded-xl border border-gray-200/60 shadow-sm space-y-2">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="bg-indigo-50 text-indigo-700 text-[9px] px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">${rec.executive}</span>
+                            <h4 class="font-bold text-sm text-gray-900 mt-1">${rec.client}</h4>
+                            <p class="text-[10px] text-gray-400 font-mono mt-0.5">${rec.id} | ${rec.contact}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-sm font-black text-indigo-600 block">₹${rec.grandTotal.toLocaleString('en-IN')}</span>
+                            <span class="text-[10px] text-gray-400">${new Date(rec.timestamp).toLocaleDateString('en-IN', {day:'2-digit', month:'short'})}</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-600 border-t border-gray-50 pt-1.5 truncate"><strong>Site:</strong> ${rec.site}</p>
+                    <button onclick="triggerPdfGenerationPipeline('${rec.id}')" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold py-1 px-2 rounded text-[11px] flex justify-center items-center space-x-1 transition-colors">
+                        <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
+                        <span>Generate & Review PDF Report</span>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // ================= HIGH-FIDELITY MOBILE DATA TO PDF RENDERING CONVERTER ================= -->
+        function triggerPdfGenerationPipeline(id) {
+            const record = masterEnquiries.find(e => e.id === id);
+            if(!record) return alert("System Retrieval Mapping Exception.");
+
+            // Bind structured data targets directly inside template node hooks
+            document.getElementById("pdf-id").innerText = record.id;
+            document.getElementById("pdf-date").innerText = new Date(record.timestamp).toLocaleString('en-IN', {dateStyle: 'medium', timeStyle: 'short'});
+            document.getElementById("pdf-rep").innerText = record.executive;
+            document.getElementById("pdf-site").innerText = record.site;
+            document.getElementById("pdf-client").innerText = record.client;
+            document.getElementById("pdf-phone").innerText = record.contact;
+            document.getElementById("pdf-remarks").innerText = record.remarks || "No supplementary logistics instructions logged.";
+            document.getElementById("pdf-grand-total").innerText = `₹${record.grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+            const rowsTarget = document.getElementById("pdf-table-rows");
+            rowsTarget.innerHTML = record.items.map(item => `
+                <tr class="font-sans">
+                    <td class="p-2 border border-gray-200 font-bold text-gray-900">${item.description}</td>
+                    <td class="p-2 border border-gray-200 text-gray-500">${item.brand}</td>
+                    <td class="p-2 border border-gray-200 text-center font-bold">${item.qty}</td>
+                    <td class="p-2 border border-gray-200 text-right">₹${item.unitCost.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                    <td class="p-2 border border-gray-200 text-right font-bold text-gray-800">₹${(item.qty * item.unitCost).toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                    <td class="p-2 border border-gray-200 text-[11px] italic text-gray-600">${item.notes || '-'}</td>
+                </tr>
+            `).join('');
+
+            // Compilation parameters configuration optimized for smartphone downloading
+            const configurations = {
+                margin:       [15, 15, 15, 15],
+                filename:     `Sai_Marketing_${record.client.replace(/\s+/g, '_')}_Requirements.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            const element = document.getElementById("pdf-rendering-template");
+            
+            // Execute non-blocking compilation promise pipeline
+            html2pdf().set(configurations).from(element).save().then(() => {
+                console.log("Mobile PDF stream conversion cycle completed execution successfully.");
+            });
+        }
+    </script>
+</body>
+</html>
