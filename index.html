@@ -3,250 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sai Marketing | Sales Checklist</title>
-    <!-- Tailwind CSS for high-fidelity mobile styling -->
+    <title>Sai Marketing | Field Requirements Registry</title>
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons for touch-optimized interactive iconography -->
+    <!-- Highly legible UI clean fonts: Plus Jakarta Sans (Clean Modern Gothic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Light UI Iconography Pack -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- html2pdf.js for native device PDF rendering and mobile downloading -->
+    <!-- Isolated stream safe PDF compiler engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        groundedBg: '#F6F5F3',
+                        groundedText: '#111111',
+                        groundedAccent: '#7A0F14',
+                        groundedMuted: '#D3CEC7',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Custom touch parameters & branding scrollbar behaviors */
-        input[type="checkbox"] { min-width: 24px; min-height: 24px; }
+        body { background-color: #F6F5F3; color: #111111; font-family: "Plus Jakarta Sans", sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        input[type="checkbox"] { accent-color: #7A0F14; width: 18px; height: 18px; cursor: pointer; }
     </style>
 </head>
-<body class="bg-[#FDFBF7] font-sans text-stone-800 antialiased min-h-screen pb-24">
+<body class="bg-groundedBg text-groundedText antialiased min-h-screen pb-28">
 
-    <!-- ================= PREMIUM GROUNDED HEADER ================= -->
-    <header class="bg-[#2C2520] text-[#F5F2EB] sticky top-0 z-40 shadow-sm px-4 py-3.5 flex justify-between items-center border-b border-[#4A3E36]">
-        <div class="flex items-center space-x-2">
-            <div class="p-1.5 bg-[#D4A373] rounded-lg text-[#2C2520]">
-                <i data-lucide="building-2" class="w-5 h-5"></i>
-            </div>
-            <div>
-                <span class="font-bold text-base tracking-tight block leading-tight text-[#FAF8F5]">Sai Marketing</span>
-                <span class="text-[10px] text-[#CCD5AE] font-medium block uppercase tracking-wider">Field Requirements Portal</span>
-            </div>
+    <!-- ================= MINIMAL TEXT PARALLEL HEADER ================= -->
+    <header class="max-w-md mx-auto pt-10 px-6 pb-6 flex justify-between items-baseline border-b border-groundedMuted/30">
+        <div>
+            <h1 class="text-xl font-bold tracking-tight text-groundedText uppercase">Sai Marketing</h1>
+            <p class="text-[9px] uppercase tracking-[0.25em] text-groundedText/40 font-medium mt-1">Field Procurement Checklist</p>
         </div>
-        <div id="role-badge" class="text-[10px] bg-[#4A3E36] text-[#E6E1DA] px-2.5 py-1 rounded-md font-semibold uppercase tracking-widest">
-            Loading...
+        <div id="role-badge" onclick="toggleAdminAccessViaClick()" class="text-[9px] uppercase tracking-widest text-groundedAccent font-bold cursor-pointer opacity-60 hover:opacity-100 tracking-widest">
+            Field Team
         </div>
     </header>
 
-    <!-- ================= MAIN APPS MATRIX CONTAINER ================= -->
-    <main class="max-w-md mx-auto p-3 space-y-4">
+    <!-- ================= MAIN CORE SCREEN FRAMEWORK ================= -->
+    <main class="max-w-md mx-auto p-6 space-y-10">
         
-        <!-- EXECUTIVE IDENTITY PROFILE LOCK-IN (Sales View Only) -->
-        <div id="identity-card" class="hidden bg-white p-5 rounded-xl shadow-sm border border-[#E6E1DA] space-y-4">
-            <div class="flex items-center space-x-2 text-[#2C2520]">
-                <i data-lucide="user-check" class="w-5 h-5 text-[#D4A373]"></i>
-                <h2 class="font-bold text-xs uppercase tracking-widest text-stone-500">Executive Profile Setup</h2>
-            </div>
-            <p class="text-xs text-stone-500 leading-relaxed">Please lock in your official name below. This configures your local mobile terminal instance to only view your own pipeline entries.</p>
-            <div class="space-y-2">
-                <input type="text" id="lockedExecName" placeholder="Enter Full Name" class="w-full border border-stone-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373] bg-[#FAF8F5]">
-                <button onclick="lockExecutiveProfile()" class="w-full bg-[#2C2520] text-[#FAF8F5] py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#4A3E36] transition-colors shadow">Lock Profile Account</button>
+        <!-- INITIAL IDENTITY USER ASSIGNMENT BINDING -->
+        <div id="identity-card" class="hidden bg-white p-6 rounded-sm border border-groundedMuted/40 space-y-5 shadow-xs">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-groundedText">Executive Login</h2>
+            <p class="text-xs text-groundedText/50 leading-relaxed font-normal">Enter your full name to access your localized pipeline checklist profile account dashboard.</p>
+            <div class="space-y-4">
+                <input type="text" id="lockedExecName" placeholder="Full Name" class="w-full bg-transparent border-b border-groundedMuted/60 py-2 text-sm focus:outline-none focus:border-groundedAccent font-medium text-groundedText transition-colors">
+                <button onclick="lockExecutiveProfile()" class="w-full bg-groundedText text-groundedBg py-3 text-xs uppercase tracking-widest font-semibold hover:bg-groundedAccent transition-colors">Authenticate</button>
             </div>
         </div>
 
-        <!-- ================= VIEW 1: SALES FORM VIEW ================= -->
-        <div id="sales-form-view" class="hidden space-y-4">
+        <!-- ================= VIEW 1: CLEAN TRANSACTION ENTRY FORM ================= -->
+        <div id="sales-form-view" class="hidden space-y-10">
             
-            <!-- Dynamic Form Header Dashboard -->
-            <div id="executive-banner" class="hidden bg-gradient-to-br from-[#2C2520] to-[#4A3E36] text-white p-4 rounded-xl shadow-sm justify-between items-center border border-[#1A1614]">
-                <div>
-                    <span class="text-[9px] uppercase tracking-widest text-[#D4A373] font-bold block mb-0.5">Field Executive</span>
-                    <span id="display-agent-name" class="font-bold text-base text-[#FAF8F5]">...</span>
-                </div>
-                <button onclick="resetAgentProfile()" class="text-[10px] text-stone-300 underline hover:text-[#FAF8F5]">Switch Account</button>
+            <!-- Context Header Banner -->
+            <div id="executive-banner" class="hidden justify-between items-baseline text-xs text-groundedText/40 border-b border-dashed border-groundedMuted/30 pb-3 font-medium">
+                <div>Logged: <span id="display-agent-name" class="font-bold text-groundedText">...</span></div>
+                <button onclick="resetAgentProfile()" class="text-[9px] uppercase tracking-wider text-groundedAccent hover:underline font-bold">Switch Identity</button>
             </div>
 
-            <!-- Client & Project Details Form Segment -->
-            <form id="checklist-form" onsubmit="handleFormSubmit(event)" class="bg-white p-4 rounded-xl shadow-sm border border-[#E6E1DA] space-y-3.5">
-                <div class="border-b border-stone-100 pb-2 flex items-center space-x-2 text-stone-800">
-                    <i data-lucide="notebook" class="w-4 h-4 text-[#D4A373]"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-600">Client & Site Parameters</h3>
-                </div>
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-400 uppercase tracking-wide mb-1">Client Business / Person Name *</label>
-                        <input type="text" id="clientName" required class="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm bg-[#FAF8F5] focus:ring-2 focus:ring-[#D4A373] focus:outline-none">
+            <!-- Clean Inputs Section Frame Layout -->
+            <form id="checklist-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                <div class="space-y-6">
+                    <div class="relative">
+                        <input type="text" id="clientName" required placeholder=" " class="peer w-full bg-transparent border-b border-groundedMuted/60 py-2 text-sm focus:outline-none focus:border-groundedAccent tracking-wide transition-colors font-medium">
+                        <label class="absolute left-0 top-2 text-xs text-groundedText/40 uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2 peer-focus:-top-4 peer-focus:text-[9px] peer-focus:text-groundedAccent font-bold">Client / Business Name *</label>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-400 uppercase tracking-wide mb-1">Contact Phone Number *</label>
-                        <input type="tel" id="contactNo" required class="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm bg-[#FAF8F5] focus:ring-2 focus:ring-[#D4A373] focus:outline-none">
+                    <div class="relative">
+                        <input type="tel" id="contactNo" required placeholder=" " class="peer w-full bg-transparent border-b border-groundedMuted/60 py-2 text-sm focus:outline-none focus:border-groundedAccent tracking-wide transition-colors font-medium">
+                        <label class="absolute left-0 top-2 text-xs text-groundedText/40 uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2 peer-focus:-top-4 peer-focus:text-[9px] peer-focus:text-groundedAccent font-bold">Contact Phone Number *</label>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-400 uppercase tracking-wide mb-1">Project Site Location Address *</label>
-                        <input type="text" id="projectSite" required class="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm bg-[#FAF8F5] focus:ring-2 focus:ring-[#D4A373] focus:outline-none">
+                    <div class="relative">
+                        <input type="text" id="projectSite" required placeholder=" " class="peer w-full bg-transparent border-b border-groundedMuted/60 py-2 text-sm focus:outline-none focus:border-groundedAccent tracking-wide transition-colors font-medium">
+                        <label class="absolute left-0 top-2 text-xs text-groundedText/40 uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2 peer-focus:-top-4 peer-focus:text-[9px] peer-focus:text-groundedAccent font-bold">Project Site Location Location *</label>
                     </div>
                 </div>
             </form>
 
-            <!-- Touch Matrix Item Selection Layout -->
-            <div class="bg-white rounded-xl shadow-sm border border-[#E6E1DA] overflow-hidden">
-                <div class="p-4 bg-[#F5F2EB] border-b border-[#E6E1DA] flex justify-between items-center">
-                    <div class="flex items-center space-x-1.5 text-stone-800">
-                        <i data-lucide="package-check" class="w-4 h-4 text-[#2C2520]"></i>
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-stone-700">Product Checklist</h3>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-[9px] uppercase tracking-wider text-stone-400 block font-bold">Est. Total</span>
-                        <span id="grand-total-display" class="text-lg font-black text-[#2C2520]">₹0</span>
+            <!-- Spacious Item Selection Blocks Frame -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-baseline border-b border-groundedMuted/30 pb-2.5">
+                    <h3 class="text-[10px] uppercase tracking-widest text-groundedText/40 font-bold">Product Catalog Selection Matrix</h3>
+                    <div class="text-right flex items-baseline space-x-1.5">
+                        <span class="text-[9px] uppercase tracking-wider text-groundedText/30 font-bold">Total:</span>
+                        <span class="text-sm font-extrabold text-groundedText" id="grand-total-display">₹0</span>
                     </div>
                 </div>
 
-                <!-- Scrollable Mobile List Stacked Cards -->
-                <div id="mobile-product-cards" class="divide-y divide-stone-100 max-h-[48vh] overflow-y-auto p-2 space-y-2 no-scrollbar">
-                    <!-- Loaded dynamically via Javascript -->
+                <div id="mobile-product-cards" class="space-y-4 max-h-[45vh] overflow-y-auto pr-1 no-scrollbar">
+                    <!-- Loaded dynamically via JavaScript catalog arrays -->
                 </div>
+            </div>
 
-                <div class="p-4 bg-[#F5F2EB] border-t border-[#E6E1DA] space-y-3">
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-500 uppercase tracking-wide mb-1">Logistical Instructions / Site Remarks</label>
-                        <textarea id="additionalRemarks" rows="2" class="w-full border border-stone-200 rounded-lg p-2 text-xs bg-white focus:ring-2 focus:ring-[#D4A373] focus:outline-none" placeholder="Enter special delivery directions, customized layout requests..."></textarea>
-                    </div>
-                    <button type="submit" form="checklist-form" class="w-full bg-[#2C2520] text-[#FAF8F5] font-bold py-3.5 px-4 rounded-xl text-xs uppercase tracking-wider shadow hover:bg-[#4A3E36] active:scale-[0.99] transition-transform flex justify-center items-center space-x-2">
-                        <i data-lucide="shield-alert" class="w-4 h-4 text-[#D4A373]"></i>
-                        <span>Save requirements log</span>
-                    </button>
+            <!-- Global Internal Remarks Column Field -->
+            <div class="space-y-5 pt-2">
+                <div class="relative">
+                    <input type="text" id="additionalRemarks" placeholder=" " class="peer w-full bg-transparent border-b border-groundedMuted/60 py-2 text-sm focus:outline-none focus:border-groundedAccent transition-colors font-medium">
+                    <label class="absolute left-0 top-2 text-xs text-groundedText/40 uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-2 peer-focus:-top-4 peer-focus:text-[9px] peer-focus:text-groundedAccent font-bold">Additional Logistics Instructions / Remarks</label>
                 </div>
+                <button type="submit" id="submit-btn" form="checklist-form" class="w-full bg-groundedText text-groundedBg font-bold py-4 text-xs uppercase tracking-[0.25em] transition-colors hover:bg-groundedAccent shadow-xs">
+                    Push Logs To Google Sheets
+                </button>
+            </div>
+
+        </div>
+
+        <!-- ================= VIEW 2: EXECUTIVE PERSONAL PIPELINE DATA DASHBOARD ================= -->
+        <div id="sales-dashboard-view" class="hidden space-y-6">
+            <div class="flex justify-between items-baseline border-b border-groundedMuted/30 pb-3">
+                <h3 class="text-[10px] uppercase tracking-widest text-groundedText/40 font-bold">My Personal Submission Records</h3>
+                <span id="agent-submission-count" class="text-xs font-semibold text-groundedText/60">0 Logs Logged</span>
+            </div>
+            <div id="agent-history-stack" class="space-y-4">
+                <!-- Stack components dynamic container -->
             </div>
         </div>
 
-        <!-- ================= VIEW 2: AGENT PERSONAL HISTORY VIEW ================= -->
-        <div id="sales-dashboard-view" class="hidden space-y-3">
-            <div class="flex justify-between items-center">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500">My Submissions Portfolio</h3>
-                <span id="agent-submission-count" class="bg-[#E6E1DA] text-stone-700 text-xs px-2.5 py-0.5 rounded-full font-bold">0 Forms</span>
-            </div>
-            <div id="agent-history-stack" class="space-y-2">
-                <!-- Stacked Mobile List Grid cards -->
-            </div>
-        </div>
-
-        <!-- ================= VIEW 3: ADMINISTRATIVE COMMAND VIEW ================= -->
-        <div id="admin-view" class="hidden space-y-4">
-            <!-- Strategic Performance Widgets -->
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-white p-3.5 rounded-xl border border-[#E6E1DA] shadow-sm">
-                    <span class="block text-[9px] font-bold text-stone-400 uppercase tracking-wider">Total Enquiries</span>
-                    <span id="admin-widget-count" class="text-xl font-black text-stone-800">0</span>
+        <!-- ================= VIEW 3: GLOBAL ADMINISTRATIVE MANAGEMENT COMMAND VIEW ================= -->
+        <div id="admin-view" class="hidden space-y-8">
+            
+            <!-- Performance Analytical Widgets -->
+            <div class="grid grid-cols-2 gap-6 border-b border-groundedMuted/30 pb-6">
+                <div>
+                    <span class="block text-[9px] font-bold uppercase tracking-widest text-groundedText/40 mb-1">Total Logs Synced</span>
+                    <span id="admin-widget-count" class="text-3xl font-extrabold tracking-tight text-groundedText">0</span>
                 </div>
-                <div class="bg-white p-3.5 rounded-xl border border-[#E6E1DA] shadow-sm">
-                    <span class="block text-[9px] font-bold text-stone-400 uppercase tracking-wider">Gross Pipeline Value</span>
-                    <span id="admin-widget-value" class="text-xl font-black text-[#2C2520]">₹0</span>
+                <div>
+                    <span class="block text-[9px] font-bold uppercase tracking-widest text-groundedText/40 mb-1">Gross Pipeline Valuation</span>
+                    <span id="admin-widget-value" class="text-3xl font-extrabold tracking-tight text-groundedAccent">₹0</span>
                 </div>
             </div>
 
-            <!-- Executive Metric List Tracker -->
-            <div class="bg-white p-4 rounded-xl border border-[#E6E1DA] shadow-sm space-y-3">
-                <h4 class="text-xs font-bold text-stone-700 uppercase tracking-wider border-b border-stone-100 pb-2 flex items-center space-x-1.5">
-                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#D4A373]"></i>
-                    <span>Executive Metrics Summary</span>
-                </h4>
-                <div id="admin-executive-leaderboard" class="divide-y divide-stone-100 text-xs space-y-1">
+            <!-- Representative Matrix Tracker Spread -->
+            <div class="space-y-3">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-groundedText/40">Aggregations Per Field Salesperson</h3>
+                <div id="admin-executive-leaderboard" class="divide-y divide-groundedMuted/20 text-xs space-y-2 pt-1">
                     <!-- Populated dynamically -->
                 </div>
             </div>
 
-            <!-- Comprehensive Client Database Logs -->
-            <div class="space-y-2">
-                <h4 class="text-xs font-bold text-stone-500 uppercase tracking-wider">Master Client Log Registry</h4>
-                <div id="admin-master-registry" class="space-y-2">
+            <!-- Master Log Tracking Registry Lists -->
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-groundedText/40">Consolidated System Entries Registry</h3>
+                <div id="admin-master-registry" class="space-y-4">
                     <!-- Populated dynamically -->
                 </div>
             </div>
+
         </div>
 
     </main>
 
-    <!-- ================= FIXED BOTTOM NAV BAR FOR FIELD AGENTS ================= -->
-    <footer id="mobile-nav-bar" class="hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 h-16 shadow-lg z-30 flex justify-around items-center">
-        <button id="nav-btn-form" onclick="toggleSalesSubView('form')" class="flex flex-col items-center justify-center space-y-1 text-[#2C2520] font-bold transition-all">
-            <i data-lucide="file-text" class="w-5 h-5"></i>
-            <span class="text-[11px]">Enquiry Form</span>
+    <!-- ================= CLEAN BOTTOM SPACIOUS NAVIGATION FOOTER ================= -->
+    <footer id="mobile-nav-bar" class="hidden fixed bottom-0 left-0 right-0 bg-[#F6F5F3]/95 backdrop-blur-md border-t border-groundedMuted/30 h-16 z-30 flex justify-around items-center max-w-md mx-auto px-8">
+        <button id="nav-btn-form" onclick="toggleSalesSubView('form')" class="flex flex-col items-center space-y-1 text-groundedText transition-all">
+            <i data-lucide="plus" class="w-4 h-4 stroke-[2.5]"></i>
+            <span class="text-[9px] font-bold uppercase tracking-wider">New Entry</span>
         </button>
-        <button id="nav-btn-dash" onclick="toggleSalesSubView('dash')" class="flex flex-col items-center justify-center space-y-1 text-stone-400 font-medium transition-all">
-            <i data-lucide="folder-heart" class="w-5 h-5"></i>
-            <span class="text-[11px]">My Logs</span>
+        <button id="nav-btn-dash" onclick="toggleSalesSubView('dash')" class="flex flex-col items-center space-y-1 text-groundedText/30 transition-all">
+            <i data-lucide="layout-grid" class="w-4 h-4 stroke-[2]"></i>
+            <span class="text-[9px] font-bold uppercase tracking-wider">My Logs</span>
         </button>
     </footer>
 
-    <!-- ================= BRANDING WATERMARK FOOTER ================= -->
-    <div class="fixed bottom-2 right-3 z-50 text-[9px] text-stone-400 font-medium tracking-wide bg-[#FDFBF7]/90 px-2 py-0.5 rounded border border-stone-200/40 backdrop-blur-sm pointer-events-none select-none">
-        Sai Marketing | Sales Checklist · Powered by Grounded Co.
+    <!-- ================= BRANDING ALIGNED SCREEN WATERMARK EMBEDDED FOOTER ================= -->
+    <div class="fixed bottom-1 left-1/2 -translate-x-1/2 z-50 text-[8px] text-[#A29D96] lowercase tracking-[0.3em] font-bold pointer-events-none select-none text-center whitespace-nowrap">
+        POWERED BY GROUNDEDCO.in
     </div>
 
-    <!-- ================= HIDDEN BLANK CANVAS ENGINE FOR NATIVE PDF OUTPUT ================= -->
+    <!-- ================= NATIVE CLEAN HIGH-FIDELITY PDF GENERATION INTERFACE ================= -->
     <div class="absolute left-[-9999px] top-[-9999px]">
-        <div id="pdf-rendering-template" class="p-10 bg-white font-sans text-stone-800 w-[794px] space-y-6 text-xs" style="box-sizing: border-box;">
-            <!-- Document Header Title Frame -->
-            <div class="border-b-2 border-[#2C2520] pb-4 flex justify-between items-end">
+        <div id="pdf-rendering-template" class="p-12 bg-white text-stone-900 w-[794px] space-y-8 text-xs" style="box-sizing: border-box; color: #111111; font-family: 'Plus Jakarta Sans', sans-serif;">
+            <!-- Simple Clear Client Copy Title Element (Omits Powered By Grounded Co. completely) -->
+            <div class="border-b-2 border-stone-900 pb-4 flex justify-between items-baseline">
                 <div>
-                    <h1 class="text-2xl font-black uppercase tracking-tight text-[#2C2520] m-0">Sai Marketing</h1>
-                    <p class="text-[10px] text-stone-500 font-bold uppercase tracking-wider m-0 mt-0.5">Sales Checklist · Powered by Grounded Co.</p>
+                    <h1 class="text-lg font-extrabold uppercase tracking-wider m-0 text-stone-950">Sai Marketing</h1>
+                    <p class="text-[8px] text-stone-400 uppercase tracking-widest m-0 mt-1 font-bold">Product Requirements Specification Sheet</p>
                 </div>
-                <div class="text-right text-[10px] text-stone-500 space-y-0.5">
-                    <div><strong>Enquiry Reference ID:</strong> <span id="pdf-id" class="font-mono"></span></div>
-                    <div><strong>Timestamp Logged:</strong> <span id="pdf-date"></span></div>
-                </div>
-            </div>
-
-            <!-- Structural Metadata Grid Map -->
-            <div class="bg-[#FAF8F5] p-4 rounded-lg border border-stone-200 grid grid-cols-2 gap-4">
-                <div class="space-y-1">
-                    <p class="text-[9px] font-bold text-stone-400 uppercase tracking-wider mb-0.5">Internal Executive Tracking</p>
-                    <p><strong>Sales Representative:</strong> <span id="pdf-rep"></span></p>
-                    <p><strong>Project Target Site:</strong> <span id="pdf-site"></span></p>
-                </div>
-                <div class="space-y-1">
-                    <p class="text-[9px] font-bold text-stone-400 uppercase tracking-wider mb-0.5">Client Information</p>
-                    <p><strong>Customer Entity:</strong> <span id="pdf-client"></span></p>
-                    <p><strong>Contact Protocol Number:</strong> <span id="pdf-phone"></span></p>
+                <div class="text-right text-[9px] text-stone-400 space-y-0.5 font-medium">
+                    <div>System Ref ID: <span id="pdf-id" class="font-mono font-bold"></span></div>
+                    <div>Timestamp Generated: <span id="pdf-date"></span></div>
                 </div>
             </div>
 
-            <!-- Core Table Checklist Structure -->
-            <div class="space-y-2">
-                <h3 class="text-[10px] uppercase tracking-wider font-bold text-stone-400">Identified Material Specifications</h3>
-                <table class="w-full text-left border-collapse">
+            <!-- Parameters Grid Split Columns Mapping Data -->
+            <div class="grid grid-cols-2 gap-8 text-[11px] border-b border-stone-100 pb-5">
+                <div class="space-y-1">
+                    <p class="text-[8px] font-bold text-stone-400 uppercase tracking-wider mb-1">Account Executive Profile</p>
+                    <p class="text-stone-600"><strong>Salesperson Representative:</strong> <span id="pdf-rep" class="text-stone-900 font-semibold"></span></p>
+                    <p class="text-stone-600"><strong>Target Construction Area Site:</strong> <span id="pdf-site" class="text-stone-900"></span></p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-[8px] font-bold text-stone-400 uppercase tracking-wider mb-1">Client Contact Profile</p>
+                    <p class="text-stone-600"><strong>Customer Name Entity:</strong> <span id="pdf-client" class="text-stone-900 font-semibold"></span></p>
+                    <p class="text-stone-600"><strong>Telephone Protocols Line:</strong> <span id="pdf-phone" class="text-stone-900"></span></p>
+                </div>
+            </div>
+
+            <!-- Requirements Table Framework Layout -->
+            <div class="space-y-3">
+                <h3 class="text-[8px] uppercase tracking-wider font-bold text-stone-400">Tracked Material Grouping Requirements</h3>
+                <table class="w-full text-left border-collapse text-[11px]">
                     <thead>
-                        <tr class="bg-[#2C2520] text-[#FAF8F5] uppercase text-[9px] tracking-wider">
-                            <th class="p-2 border border-[#2C2520]">Product Classification</th>
-                            <th class="p-2 border border-[#2C2520]">Standard System Options</th>
-                            <th class="p-2 border border-[#2C2520] text-center w-12">Qty</th>
-                            <th class="p-2 border border-[#2C2520] text-right w-24">Unit Cost</th>
-                            <th class="p-2 border border-[#2C2520] text-right w-28">Aggregate Value</th>
-                            <th class="p-2 border border-[#2C2520] w-36">Custom Requirement Notes</th>
+                        <tr class="border-b border-stone-800 text-[8px] uppercase text-stone-400 tracking-wider font-bold">
+                            <th class="pb-2.5">Material Specification</th>
+                            <th class="pb-2.5">Standard Brand Scope</th>
+                            <th class="pb-2.5 text-center w-12">Qty</th>
+                            <th class="pb-2.5 text-right w-24">Unit Rate</th>
+                            <th class="pb-2.5 text-right w-24">Gross Total</th>
+                            <th class="pb-2.5 pl-6">Custom Specific Field Notes</th>
                         </tr>
                     </thead>
-                    <tbody id="pdf-table-rows" class="divide-y divide-stone-200 border border-stone-200">
-                        <!-- Filled on runtime download loops -->
+                    <tbody id="pdf-table-rows" class="divide-y divide-stone-100 text-stone-800">
+                        <!-- Filled dynamically during execution runtime loop cycles -->
                     </tbody>
                     <tfoot>
-                        <tr class="font-bold bg-stone-50 text-xs">
-                            <td colspan="4" class="p-2 text-right uppercase text-[9px] tracking-wider text-stone-400 font-bold">Estimated Pipeline Valuation:</td>
-                            <td id="pdf-grand-total" class="p-2 text-right text-[#2C2520] font-black text-sm">₹0.00</td>
+                        <tr class="font-bold text-xs border-t border-stone-900">
+                            <td colspan="4" class="pt-4 text-right uppercase text-[8px] tracking-widest text-stone-400 font-bold">Total Estimated Budget Evaluation:</td>
+                            <td id="pdf-grand-total" class="pt-4 text-right text-stone-950 font-extrabold text-sm">₹0.00</td>
                             <td></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
 
-            <!-- Terminal Logistics Memo Header -->
-            <div class="space-y-1">
-                <h4 class="text-[9px] uppercase tracking-wider font-bold text-stone-400">Additional Field Log Notes / Remarks</h4>
-                <div id="pdf-remarks" class="p-3 bg-[#FAF8F5] border border-stone-200 text-xs italic rounded min-h-[40px] text-stone-600"></div>
+            <!-- Footer Additional Memo Remarks Row Card -->
+            <div class="space-y-2 pt-4">
+                <h4 class="text-[8px] uppercase tracking-wider font-bold text-stone-400">Logistical Instructions / Site Notes</h4>
+                <div id="pdf-remarks" class="p-3 bg-stone-50 border border-stone-200 text-xs italic rounded text-stone-600 min-h-[45px] leading-relaxed"></div>
             </div>
         </div>
     </div>
 
-    <!-- ================= APP INFRASTRUCTURE JAVA ENGINE SCRIPTS ================= -->
+    <!-- ================= SYSTEMS CORE APPLICATION CODE INTERFACES ================= -->
     <script>
-        // Official Product Catalogue from Product Checklist PDF
+        // PASTE YOUR GENERATED MICROSOFT SCRIPT DEPLOYMENT GOOGLE WEBAPP SERVICE ENDPOINT URL LINK HERE:
+        const GOOGLE_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwqgV_YOUR_ACTUAL_DEPLOYED_ID_HERE/exec";
+
         const catalogData = [
             { id: 1, desc: "Rockwool / Glasswool", brands: "Roxul / Owens Corning" },
             { id: 2, desc: "Soffit Ceiling", brands: "PARE" },
@@ -265,7 +270,7 @@
             { id: 15, desc: "UPVC Sheets", brands: "Prospan / Ecoshape" }
         ];
 
-        let currentRole = "sales"; 
+        let currentRole = "sales";
         let currentAgentName = localStorage.getItem("sai_marketing_agent_identity") || "";
         let masterEnquiries = JSON.parse(localStorage.getItem("sai_marketing_enquiries")) || [];
 
@@ -279,11 +284,10 @@
             const urlParams = new URLSearchParams(window.location.search);
             if(urlParams.get('view') === 'admin') {
                 currentRole = "admin";
-                document.getElementById("role-badge").innerText = "Admin Desk";
-                document.getElementById("role-badge").className = "text-[9px] bg-[#D4A373] text-[#2C2520] px-2.5 py-1 rounded font-bold uppercase tracking-widest";
+                document.getElementById("role-badge").innerText = "Admin Console";
             } else {
                 currentRole = "sales";
-                document.getElementById("role-badge").innerText = "Field Rep Instance";
+                document.getElementById("role-badge").innerText = "Field Team";
             }
         }
 
@@ -305,14 +309,14 @@
 
         function lockExecutiveProfile() {
             const inputVal = document.getElementById("lockedExecName").value.trim();
-            if(!inputVal) return alert("Please specify an executive name identity profile signature.");
+            if(!inputVal) return alert("Please establish a valid identity credentials string loop.");
             localStorage.setItem("sai_marketing_agent_identity", inputVal);
             currentAgentName = inputVal;
             displayAuthenticatedSalesInterface();
         }
 
         function resetAgentProfile() {
-            if(confirm("Wipe profile configuration credentials signature lock on this smart terminal device?")) {
+            if(confirm("Clear profile accounts tracking configuration signature on this terminal window?")) {
                 localStorage.removeItem("sai_marketing_agent_identity");
                 currentAgentName = "";
                 window.location.reload();
@@ -337,13 +341,13 @@
             if(subview === 'form') {
                 formView.classList.remove("hidden");
                 dashView.classList.add("hidden");
-                btnForm.className = "flex flex-col items-center justify-center space-y-1 text-[#2C2520] font-bold transition-all";
-                btnDash.className = "flex flex-col items-center justify-center space-y-1 text-stone-400 font-medium transition-all";
+                btnForm.className = "flex flex-col items-center space-y-1 text-groundedText opacity-100 font-bold";
+                btnDash.className = "flex flex-col items-center space-y-1 text-groundedText/30 opacity-60";
             } else {
                 formView.classList.add("hidden");
                 dashView.classList.remove("hidden");
-                btnForm.className = "flex flex-col items-center justify-center space-y-1 text-stone-400 font-medium transition-all";
-                btnDash.className = "flex flex-col items-center justify-center space-y-1 text-[#2C2520] font-bold transition-all";
+                btnForm.className = "flex flex-col items-center space-y-1 text-groundedText/30 opacity-60";
+                btnDash.className = "flex flex-col items-center space-y-1 text-groundedText opacity-100 font-bold";
                 renderPersonalAgentDashboard();
             }
         }
@@ -351,28 +355,32 @@
         function renderMobileProductStackCards() {
             const container = document.getElementById("mobile-product-cards");
             container.innerHTML = catalogData.map(item => `
-                <div id="card-${item.id}" class="p-3.5 rounded-xl border border-stone-200 bg-white space-y-3 transition-all shadow-sm">
-                    <div class="flex items-start space-x-3">
-                        <input type="checkbox" id="check-${item.id}" onchange="toggleCardActivity(${item.id})" class="mt-0.5 rounded text-[#2C2520] border-stone-300 focus:ring-[#D4A373] cursor-pointer">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="text-xs font-bold text-stone-800 leading-tight">${item.desc}</h4>
-                            <p class="text-[10px] text-stone-400 font-medium truncate mt-0.5">${item.brands}</p>
+                <div id="card-${item.id}" class="p-5 bg-white border border-groundedMuted/20 transition-all space-y-4 rounded-sm">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3.5">
+                            <input type="checkbox" id="check-${item.id}" onchange="toggleCardActivity(${item.id})">
+                            <div>
+                                <h4 class="text-xs font-semibold text-groundedText tracking-tight">${item.desc}</h4>
+                                <p class="text-[9px] text-groundedText/40 uppercase tracking-widest mt-1 font-medium">${item.brands}</p>
+                            </div>
                         </div>
-                        <span id="total-lbl-${item.id}" class="text-xs font-bold text-stone-400">₹0</span>
+                        <span id="total-lbl-${item.id}" class="text-xs font-semibold text-groundedText/30">₹0</span>
                     </div>
                     
-                    <div id="calc-fields-${item.id}" class="hidden grid grid-cols-2 gap-2 pt-2.5 border-t border-dashed border-stone-100 bg-[#FAF8F5] p-2 rounded-lg">
-                        <div>
-                            <label class="block text-[9px] font-bold text-stone-400 uppercase tracking-wide mb-0.5">Quantity</label>
-                            <input type="number" id="qty-${item.id}" min="1" value="1" oninput="calculateCardTotal(${item.id})" class="w-full border border-stone-200 rounded px-2 py-1 text-xs text-center focus:outline-none focus:border-[#D4A373]">
+                    <div id="calc-fields-${item.id}" class="hidden space-y-4 pt-4 border-t border-dashed border-groundedMuted/20">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[9px] text-groundedText/40 uppercase tracking-wider font-bold mb-1">Quantity</label>
+                                <input type="number" id="qty-${item.id}" min="1" value="1" oninput="calculateCardTotal(${item.id})" class="w-full bg-transparent border-b border-groundedMuted py-1 text-xs text-center focus:outline-none focus:border-groundedAccent font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] text-groundedText/40 uppercase tracking-wider font-bold mb-1">Est. Unit Price (₹)</label>
+                                <input type="number" id="cost-${item.id}" min="0" placeholder="0" oninput="calculateCardTotal(${item.id})" class="w-full bg-transparent border-b border-groundedMuted py-1 text-xs text-right focus:outline-none focus:border-groundedAccent font-semibold">
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-[9px] font-bold text-stone-400 uppercase tracking-wide mb-0.5">Est Price / Unit (₹)</label>
-                            <input type="number" id="cost-${item.id}" min="0" placeholder="0" oninput="calculateCardTotal(${item.id})" class="w-full border border-stone-200 rounded px-2 py-1 text-xs text-right focus:outline-none focus:border-[#D4A373]">
-                        </div>
-                        <div class="col-span-2">
-                            <label class="block text-[9px] font-bold text-stone-400 uppercase tracking-wide mb-0.5">Custom Specific Notes</label>
-                            <input type="text" id="notes-${item.id}" placeholder="Note measurements, size requirements..." class="w-full border border-stone-200 rounded px-2 py-1 text-[11px] focus:outline-none focus:border-[#D4A373]">
+                            <label class="block text-[9px] text-groundedText/40 uppercase tracking-wider font-bold mb-1">Custom Notes</label>
+                            <input type="text" id="notes-${item.id}" placeholder="Note special layout criteria..." class="w-full bg-transparent border-b border-groundedMuted py-1 text-xs focus:outline-none focus:border-groundedAccent font-medium">
                         </div>
                     </div>
                 </div>
@@ -386,13 +394,13 @@
             const labelTotal = document.getElementById(`total-lbl-${id}`);
 
             if(isChecked) {
-                card.className = "p-3.5 rounded-xl border border-[#D4A373] bg-[#FAF8F5] space-y-3 transition-all shadow-sm";
+                card.className = "p-5 bg-white border border-groundedAccent/40 shadow-xs transition-all space-y-4 rounded-sm";
                 fieldsBlock.classList.remove("hidden");
-                labelTotal.className = "text-xs font-black text-[#2C2520]";
+                labelTotal.className = "text-xs font-bold text-groundedAccent";
             } else {
-                card.className = "p-3.5 rounded-xl border border-stone-200 bg-white space-y-3 transition-all shadow-sm";
+                card.className = "p-5 bg-white border border-groundedMuted/20 transition-all space-y-4 rounded-sm";
                 fieldsBlock.classList.add("hidden");
-                labelTotal.className = "text-xs font-bold text-stone-400";
+                labelTotal.className = "text-xs font-semibold text-groundedText/30";
                 document.getElementById(`qty-${id}`).value = 1;
                 document.getElementById(`cost-${id}`).value = "";
                 document.getElementById(`notes-${id}`).value = "";
@@ -424,7 +432,7 @@
 
         function handleFormSubmit(event) {
             event.preventDefault();
-            if(!currentAgentName) return alert("Identity Context Execution Blocked.");
+            if(!currentAgentName) return alert("System Identity Context Interrupted.");
 
             const selectedLines = [];
             catalogData.forEach(item => {
@@ -440,7 +448,11 @@
                 }
             });
 
-            if(selectedLines.length === 0) return alert("Please verify at least 1 specification parameters column metric.");
+            if(selectedLines.length === 0) return alert("Please choose at least 1 functional checklist line element.");
+
+            const submitBtn = document.getElementById("submit-btn");
+            submitBtn.disabled = true;
+            submitBtn.innerText = "SYNCING TO GOOGLE CLOUD...";
 
             const documentRecord = {
                 id: 'SM-' + Math.floor(100000 + Math.random() * 900000),
@@ -454,44 +466,61 @@
                 grandTotal: calculateGrandTotal()
             };
 
-            masterEnquiries.push(documentRecord);
-            localStorage.setItem("sai_marketing_enquiries", JSON.stringify(masterEnquiries));
-            
-            alert(`Enquiry Log Saved Successfully! ID Reference: ${documentRecord.id}`);
-            document.getElementById("checklist-form").reset();
-            document.getElementById("additionalRemarks").value = "";
-            renderMobileProductStackCards();
-            calculateGrandTotal();
-            toggleSalesSubView('dash');
+            // Dual Transmission Protocol: Save Locally to Device + Ship to cloud sheet pipeline
+            fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(documentRecord)
+            }).then(() => {
+                masterEnquiries.push(documentRecord);
+                localStorage.setItem("sai_marketing_enquiries", JSON.stringify(masterEnquiries));
+                
+                alert(`SUCCESS! Data uploaded into master Google Sheet pipeline. Reference: ${documentRecord.id}`);
+                
+                // Form cleanup reset
+                document.getElementById("checklist-form").reset();
+                document.getElementById("additionalRemarks").value = "";
+                renderMobileProductStackCards();
+                calculateGrandTotal();
+                
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Push Logs To Google Sheets";
+                toggleSalesSubView('dash');
+            }).catch(err => {
+                alert("Network streaming upload failure. Local tracking copy compiled, check connection vectors.");
+                console.error(err);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Push Logs To Google Sheets";
+            });
         }
 
         function renderPersonalAgentDashboard() {
             const stack = document.getElementById("agent-history-stack");
             const selfRecords = masterEnquiries.filter(e => e.executive.trim().toLowerCase() === currentAgentName.trim().toLowerCase());
             
-            document.getElementById("agent-submission-count").innerText = `${selfRecords.length} Forms`;
+            document.getElementById("agent-submission-count").innerText = `${selfRecords.length} Records`;
 
             if(selfRecords.length === 0) {
-                stack.innerHTML = `<div class="bg-white p-6 rounded-xl border border-stone-200 text-center text-xs text-stone-400 italic shadow-sm">No recorded field customer histories found on this phone instance yet.</div>`;
+                stack.innerHTML = `<div class="p-8 border border-dashed border-groundedMuted/50 text-center text-xs text-groundedText/40 font-medium italic rounded-sm">No localized portfolio submissions entries stored yet.</div>`;
                 return;
             }
 
             stack.innerHTML = selfRecords.slice().reverse().map(rec => `
-                <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-3">
-                    <div class="flex justify-between items-start">
+                <div class="bg-white p-5 border border-groundedMuted/20 space-y-4 rounded-sm shadow-xs">
+                    <div class="flex justify-between items-baseline">
                         <div>
-                            <span class="text-[9px] text-stone-400 font-mono block tracking-wider">${new Date(rec.timestamp).toLocaleDateString('en-IN', {day:'2-digit', month:'short'})} | REF: ${rec.id}</span>
-                            <h4 class="font-bold text-sm text-stone-800 mt-0.5">${rec.client}</h4>
+                            <span class="text-[9px] font-semibold text-groundedText/30 block">${new Date(rec.timestamp).toLocaleDateString('en-IN', {day:'2-digit', month:'short'})} | ID: ${rec.id}</span>
+                            <h4 class="text-xs font-bold text-groundedText mt-0.5">${rec.client}</h4>
                         </div>
-                        <span class="text-sm font-black text-[#2C2520]">₹${rec.grandTotal.toLocaleString('en-IN')}</span>
+                        <span class="text-xs font-bold text-groundedAccent">₹${rec.grandTotal.toLocaleString('en-IN')}</span>
                     </div>
-                    <div class="text-[11px] text-stone-500 space-y-0.5 border-t border-stone-50 pt-2">
-                        <p class="truncate"><strong>Site Address:</strong> ${rec.site}</p>
-                        <p class="text-[10px] font-bold text-[#D4A373] uppercase tracking-wide">${rec.items.length} Materials Checklist Elements</p>
+                    <div class="text-[11px] text-groundedText/60 space-y-1 font-medium border-t border-groundedBg pt-3">
+                        <p class="truncate"><strong class="text-groundedText font-semibold">Location Area:</strong> ${rec.site}</p>
                     </div>
-                    <button onclick="triggerMobilePdfPipeline('${rec.id}')" class="w-full bg-[#2C2520] hover:bg-[#4A3E36] text-white font-bold py-2 px-3 rounded-lg text-[11px] uppercase tracking-wider flex justify-center items-center space-x-1.5 transition-colors shadow-sm">
-                        <i data-lucide="download" class="w-3.5 h-3.5 text-[#D4A373]"></i>
-                        <span>Generate & Save Client PDF</span>
+                    <button onclick="triggerCleanMobilePdfEngine('${rec.id}')" class="w-full bg-groundedBg text-groundedText border border-groundedMuted py-2 text-[9px] font-bold uppercase tracking-widest transition-colors hover:bg-groundedText hover:text-groundedBg flex justify-center items-center space-x-2 rounded-sm">
+                        <i data-lucide="download" class="w-3.5 h-3.5 text-groundedAccent"></i>
+                        <span>Download Checklist PDF</span>
                     </button>
                 </div>
             `).join('');
@@ -513,94 +542,99 @@
 
             const leadBoard = document.getElementById("admin-executive-leaderboard");
             if(Object.keys(analyticTrackingMap).length === 0) {
-                leadBoard.innerHTML = `<p class="text-stone-400 italic text-center py-2">No activity records tracked yet.</p>`;
+                leadBoard.innerHTML = `<p class="text-groundedText/40 italic text-center py-2 text-xs font-medium">No system log activity indices captured yet.</p>`;
             } else {
                 leadBoard.innerHTML = Object.entries(analyticTrackingMap).map(([name, stat]) => `
-                    <div class="flex justify-between items-center py-2 font-medium">
-                        <div class="text-stone-700 font-bold">${name}</div>
-                        <div class="text-stone-600 font-mono">${stat.forms} leads <span class="text-stone-300 mx-1">|</span> <span class="font-extrabold text-[#2C2520]">₹${stat.worth.toLocaleString('en-IN')}</span></div>
+                    <div class="flex justify-between items-baseline py-2.5 font-medium">
+                        <div class="text-groundedText font-bold">${name}</div>
+                        <div class="text-groundedText/50 text-right text-[11px] font-semibold">${stat.forms} logs filed <span class="mx-1 text-groundedMuted">/</span> <span class="font-bold text-groundedAccent">₹${stat.worth.toLocaleString('en-IN')}</span></div>
                     </div>
                 `).join('');
             }
 
             const register = document.getElementById("admin-master-registry");
             if(masterEnquiries.length === 0) {
-                register.innerHTML = `<div class="bg-white p-6 rounded-xl border border-stone-200 text-center text-xs text-stone-400 italic shadow-sm">Global tracking pipeline empty.</div>`;
+                register.innerHTML = `<div class="p-8 border border-dashed border-groundedMuted/50 text-center text-xs text-groundedText/40 italic font-medium rounded-sm">Central framework audit record logging registry is blank.</div>`;
                 return;
             }
 
             register.innerHTML = masterEnquiries.slice().reverse().map(rec => `
-                <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-sm space-y-2.5">
+                <div class="bg-white p-5 border border-groundedMuted/30 space-y-3 rounded-sm shadow-xs">
                     <div class="flex justify-between items-start">
                         <div>
-                            <span class="bg-[#F5F2EB] text-stone-700 text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">${rec.executive}</span>
-                            <h4 class="font-bold text-sm text-stone-800 mt-1.5">${rec.client}</h4>
-                            <p class="text-[10px] text-stone-400 font-mono">${rec.id} | ${rec.contact}</p>
+                            <span class="bg-[#F5F2EB] text-groundedText/60 text-[9px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">${rec.executive}</span>
+                            <h4 class="text-xs font-bold text-groundedText mt-2 leading-tight">${rec.client}</h4>
+                            <p class="text-[9px] text-groundedText/40 mt-0.5 font-medium">${rec.id} · Contact: ${rec.contact}</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-sm font-black text-[#2C2520] block">₹${rec.grandTotal.toLocaleString('en-IN')}</span>
-                            <span class="text-[10px] text-stone-400">${new Date(rec.timestamp).toLocaleDateString('en-IN', {day:'2-digit', month:'short'})}</span>
+                            <span class="text-xs font-bold text-groundedText block">₹${rec.grandTotal.toLocaleString('en-IN')}</span>
+                            <span class="text-[9px] text-groundedText/40 block mt-0.5">${new Date(rec.timestamp).toLocaleDateString('en-IN', {day:'2-digit', month:'short'})}</span>
                         </div>
                     </div>
-                    <p class="text-xs text-stone-600 border-t border-stone-50 pt-2 truncate"><strong>Site Address Location:</strong> ${rec.site}</p>
-                    <button onclick="triggerMobilePdfPipeline('${rec.id}')" class="w-full bg-[#F5F2EB] hover:bg-[#E6E1DA] text-stone-700 font-bold py-1.5 px-2 rounded-lg text-[10px] uppercase tracking-wider flex justify-center items-center space-x-1 transition-colors">
-                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-stone-500"></i>
-                        <span>Inspect & Download Document</span>
+                    <p class="text-[11px] text-groundedText/60 border-t border-groundedBg pt-2.5 truncate"><strong>Site:</strong> ${rec.site}</p>
+                    <button onclick="triggerCleanMobilePdfEngine('${rec.id}')" class="w-full bg-groundedBg border border-groundedMuted text-groundedText text-[9px] uppercase tracking-widest py-2 font-bold transition-colors hover:bg-groundedText hover:text-groundedBg flex justify-center items-center space-x-1.5 rounded-sm">
+                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-groundedAccent"></i>
+                        <span>Export PDF Report</span>
                     </button>
                 </div>
             `).join('');
             lucide.createIcons();
         }
 
-        // ================= UPGRADED BULLETPROOF MOBILE PDF PIPELINE ENGINE ================= -->
-        function triggerMobilePdfPipeline(id) {
-            const record = masterEnquiries.find(e => e.id === id);
-            if(!record) return alert("Error mapping target record parameters instance.");
+        function toggleAdminAccessViaClick() {
+            const currentUrl = window.location.origin + window.location.pathname;
+            if (currentRole === 'sales') {
+                window.location.href = currentUrl + "?view=admin";
+            } else {
+                window.location.href = currentUrl;
+            }
+        }
 
-            // Bind data targets to hidden document template structures
+        function triggerCleanMobilePdfEngine(id) {
+            const record = masterEnquiries.find(e => e.id === id);
+            if(!record) return alert("Mapping runtime instance pointer mismatch.");
+
             document.getElementById("pdf-id").innerText = record.id;
             document.getElementById("pdf-date").innerText = new Date(record.timestamp).toLocaleString('en-IN', {dateStyle: 'medium', timeStyle: 'short'});
             document.getElementById("pdf-rep").innerText = record.executive;
             document.getElementById("pdf-site").innerText = record.site;
             document.getElementById("pdf-client").innerText = record.client;
             document.getElementById("pdf-phone").innerText = record.contact;
-            document.getElementById("pdf-remarks").innerText = record.remarks || "No special site instructions logged.";
+            document.getElementById("pdf-remarks").innerText = record.remarks || "No supplemental logistical notations saved.";
             document.getElementById("pdf-grand-total").innerText = `₹${record.grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
 
             const rowsTarget = document.getElementById("pdf-table-rows");
             rowsTarget.innerHTML = record.items.map(item => `
-                <tr class="text-stone-700">
-                    <td class="p-2 border border-stone-200 font-bold text-stone-900">${item.description}</td>
-                    <td class="p-2 border border-stone-200 text-stone-500">${item.brand}</td>
-                    <td class="p-2 border border-stone-200 text-center font-bold">${item.qty}</td>
-                    <td class="p-2 border border-stone-200 text-right">₹${item.unitCost.toLocaleString('en-IN')}</td>
-                    <td class="p-2 border border-stone-200 text-right font-bold text-stone-800">₹${(item.qty * item.unitCost).toLocaleString('en-IN')}</td>
-                    <td class="p-2 border border-stone-200 text-[10px] italic text-stone-500">${item.notes || '-'}</td>
+                <tr style="color: #111111;">
+                    <td class="py-3 border-b border-stone-100 font-bold text-stone-900">${item.description}</td>
+                    <td class="py-3 border-b border-stone-100 text-stone-500">${item.brand}</td>
+                    <td class="py-3 border-b border-stone-100 text-center font-bold">${item.qty}</td>
+                    <td class="py-3 border-b border-stone-100 text-right">₹${item.unitCost.toLocaleString('en-IN')}</td>
+                    <td class="py-3 border-b border-stone-100 text-right font-bold text-stone-900">₹${(item.qty * item.unitCost).toLocaleString('en-IN')}</td>
+                    <td class="py-3 border-b border-stone-100 pl-6 italic text-stone-400 text-[10px]">${item.notes || '-'}</td>
                 </tr>
             `).join('');
 
-            const targetElement = document.getElementById("pdf-rendering-template");
-            const cleanFileName = `Sai_Marketing_${record.client.replace(/[^a-zA-Z0-9]/g, '_')}_Checklist.pdf`;
+            const printableTarget = document.getElementById("pdf-rendering-template");
+            const cleanFileName = `Sai_Marketing_${record.client.replace(/[^a-zA-Z0-9]/g, '_')}_Specifications.pdf`;
 
-            const options = {
-                margin:       [12, 12, 12, 12],
+            const configOptions = {
+                margin:       [15, 15, 15, 15],
                 filename:     cleanFileName,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false, letterRendering: true },
+                image:        { type: 'jpeg', quality: 0.99 },
+                html2canvas:  { scale: 2.5, useCORS: true, logging: false, letterRendering: true },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // Mobile Isolation Safe Stream Generation Strategy
-            html2pdf().set(options).from(targetElement).toPdf().output('bloburl').then(function(blobUrl) {
-                // Instantly generate a temporary anchor variable to force an isolated download stream
-                const mobileDownloadLink = document.createElement('a');
-                mobileDownloadLink.href = blobUrl;
-                mobileDownloadLink.download = cleanFileName;
-                document.body.appendChild(mobileDownloadLink);
-                mobileDownloadLink.click();
-                document.body.removeChild(mobileDownloadLink);
+            html2pdf().set(configOptions).from(printableTarget).toPdf().output('bloburl').then(function(blobUrl) {
+                const triggerAnchor = document.createElement('a');
+                triggerAnchor.href = blobUrl;
+                triggerAnchor.download = cleanFileName;
+                document.body.appendChild(triggerAnchor);
+                triggerAnchor.click();
+                document.body.removeChild(triggerAnchor);
             }).catch(err => {
-                alert("PDF generation issue encountered on this smartphone browser. Try using official Chrome or Safari instances instead.");
+                alert("Mobile data execution block tracking stream failure.");
                 console.error(err);
             });
         }
